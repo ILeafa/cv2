@@ -8,7 +8,6 @@ model_people = YOLO('yolov8n.pt')
 # Загрузка изображения
 image_path = 'image.jpg'
 image = cv2.imread(image_path)
-height, width = image.shape[:2]
 
 # Выполнение предсказаний
 results_people = model_people(image)
@@ -33,7 +32,7 @@ for r in results_people:
             cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
 # Определение центров обнаруженных людей
-centers = [(int((box[0] + box[0] + box[2]) / 2), int((box[1] + box[1] + box[3]) / 2)) for box in boxes]
+centers = [(int((box[0] + box[2]) / 2), int((box[1] + box[3]) / 2)) for box in boxes]
 
 # Определение групп людей
 if len(centers) > 1:
